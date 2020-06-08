@@ -1,0 +1,34 @@
+before_script:
+- apt-get update -qq
+- apt-get install -yqq git wget unzip libzip-dev
+- docker-php-ext-configure zip --with-libzip=/usr/include
+- docker-php-ext-install zip
+- pecl install xdebug
+- docker-php-ext-enable xdebug
+# Install composer dependencies
+- wget https://composer.github.io/installer.sig -O - -q | tr -d '\n' > installer.sig
+- php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+- php -r "if (hash_file('SHA384', 'composer-setup.php') === file_get_contents('installer.sig')) { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+- php composer-setup.php
+- php -r "unlink('composer-setup.php'); unlink('installer.sig');"
+- php composer.phar install
+
+lint:
+    image: php:7.3
+    script:
+    - find src -type f -name "*.php" -print0 | xargs -0 -n1 php -l
+
+php7_compat:
+    image: php:7.3
+    script:
+    - vendor/bin/phpcs -d memory_limit=1G --standard=vendor/phpcompatibility/php-compatibility/PHPCompatibility/ruleset.xml --extensions=php --runtime-set testVersion 7.1- src
+
+phpcs_std:
+    image: php:7.3
+    script:
+    - vendor/bin/phpcs
+
+phpcsf:
+    image: php:7.3
+    script:
+    - vendor/bin/php-cs-fixer fix --dry-run

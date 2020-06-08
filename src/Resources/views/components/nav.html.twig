@@ -1,0 +1,26 @@
+{# src/resources/views/partials/actions_nav.html.twig #}
+
+{#
+
+This partial template can be used via an twig embed.
+
+```
+{% embed "@MaterialTheme/partials/actions_nav.html.twig" %}
+    {% set id = 'nav-id' %}
+    {% block actions_items %}
+        <li><a href="{{ path('route') }}">Link Text</a><li>
+    {% endblock %}
+{% endembed %}
+```
+#}
+
+{% block actions_nav %}
+<nav {% if id is defined %}id="{{ id }}"{% endif %} class="actions-nav">
+    {% block actions_list %}
+        <ul>
+        {% block actions_items %}
+        {% endblock %}
+        </ul>
+    {% endblock %}
+</nav>
+{% endblock %}

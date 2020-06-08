@@ -1,0 +1,10 @@
+{
+  "assets/main.js": "./assets/main.js",
+  "assets/main.js.map": "./assets/main.js.map",
+  "assets/templates/form.js": "./assets/templates/form.js",
+  "assets/templates/form.js.map": "./assets/templates/form.js.map",
+  "assets/templates/form.css": "./assets/templates/form.css",
+  "assets/templates/form.css.map": "./assets/templates/form.css.map",
+  "assets/main.css": "./assets/main.css",
+  "assets/main.css.map": "./assets/main.css.map"
+}

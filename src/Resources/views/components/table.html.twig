@@ -1,0 +1,81 @@
+{# templates/partials/incident_table.html.twig #}
+
+{% if not table_classes is defined  %}
+    {% set table_classes = [] %}
+{% endif %}
+
+{% if not row_default_classes is defined %}
+    {% set row_default_classes = ['item'] %}
+{% endif %}
+
+{% set table_classes = table_classes|merge([
+    'entity-list'
+]) %}
+
+<div class="entity-list-wrapper">
+
+    {% if items is defined or empty_text is defined %}
+        {% block list_header_wrapper %}
+        <div class="list-header">
+            {% block list_header %}
+                {% if title is defined %}
+                <h2 class="list-title">{{ title }}</h2>
+                {% endif %}
+            {% endblock %}
+        </div>
+        {% endblock %}
+    {% endif %}
+
+    {% if items is defined and not items is empty %}
+        {% block list_table %}
+            <table {% if id is defined %}id="{{ id }}"{% endif %} class="{{ table_classes|join(' ') }}">
+                {% block table_thead %}
+                    <thead>
+                        <tr>
+                        {% block table_header %}
+                            {#
+                                For implementation by extending template.
+
+                                Example:
+                                ```
+                                <th class="item-field">Field Name</th>
+                                ```
+                            #}
+                        {% endblock %}
+                        </tr>
+                    </thead>
+                {% endblock %}
+
+                {% block table_tbody %}
+                    <tbody>
+                    {% for item in items %}
+                        {% block table_row %}
+                            {% if row_classes is not defined %}
+                                {% set row_classes = row_default_classes %}
+                            {% endif %}
+
+                            <tr class="{{ row_classes|join(' ') }}">
+                                {% block table_row_data %}
+                                    {#
+                                        For implementation by extending template.
+
+                                        Example:
+                                        ```
+                                        <td class="item-field">{{ item.field }}</td>
+                                        ```
+                                    #}
+                                {% endblock %}
+                            </tr>
+
+                        {% endblock %}
+                    {% endfor %}
+                    </tbody>
+                {% endblock %}
+            </table>
+        {% endblock %}
+    {% elseif empty_text is defined %}
+        {% block empty_list %}
+            {{ empty_text }}
+        {% endblock %}
+    {% endif %}
+</div>

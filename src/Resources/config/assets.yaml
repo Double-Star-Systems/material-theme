@@ -1,0 +1,7 @@
+framework:
+    assets:
+        packages:
+            # Provide asset manaifest for the bundle.
+            material-theme:
+                json_manifest_path: '%kernel.project_dir%/public/bundles/material-theme/manifest.json'
+                base_path: bundles/material-theme

@@ -1,0 +1,15 @@
+{# templates/bundles/TwigBundle/Exception/error.html.twig #}
+
+{% extends '@MaterialTheme/theme.html.twig' %}
+
+{% set pagename = status_code ~ " " ~ status_text %}
+
+{% block page_title %}An Error Occurred: {{ pagename }}{% endblock %}
+
+{% block contentregion %}
+        <div class="container">
+            <p>
+                Something went wrong while loading this page. In this issue continues to occur, please notifiy support. Any issues will be resolved as soon as possible.
+            </p>
+        </div>
+{% endblock contentregion %}

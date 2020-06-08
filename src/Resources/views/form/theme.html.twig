@@ -1,0 +1,60 @@
+{# form/theme.html.twig #}
+
+{% extends 'bootstrap_4_layout.html.twig' %}
+
+{% block form_label_errors %}{% endblock form_label_errors %}
+
+{%- block form_rows -%}
+    {% for child in form|filter(child => not child.rendered) %}
+        {{- form_row(child) -}}
+    {% endfor %}
+{%- endblock form_rows -%}
+
+{% block form_row -%}
+    {%- if compound is defined and compound -%}
+        {%- set element = 'fieldset' -%}
+    {%- endif -%}
+    {%- set widget_attr = {} -%}
+    {%- if help is not empty -%}
+        {%- set widget_attr = {attr: {'aria-describedby': id ~"_help"}} -%}
+    {%- endif -%}
+    <{{ element|default('div') }} class="form-group">
+        {{- form_label(form) -}}
+        {{- form_errors(form) -}}
+        {{- form_widget(form, widget_attr) -}}
+        {{- form_help(form) -}}
+
+        {% if form.parent %}
+            {% set parent = form.parent.vars.form %}
+            {% if parent.vars is defined and parent.vars.allow_delete is defined and parent.vars.allow_delete %}
+                <button class="remove" data-item-selector="{{ id }}" onclick="return collection_delete_value(this);">Remove</button>
+            {% endif %}
+        {% endif %}
+    </{{ element|default('div') }}>
+{%- endblock form_row %}
+
+{% block form_errors -%}
+    {%- if errors|length > 0 -%}
+        <div class="{% if form is not rootform %}invalid-feedback{% else %}alert alert-danger{% endif %} d-block">
+            {%- for error in errors -%}
+                <span class="d-block">
+                    <span class="form-error-icon badge badge-danger text-uppercase">{{ 'Error'|trans({}, 'validators') }}</span> <span class="form-error-message">{{ error.message }}</span>
+                </span>
+            {%- endfor -%}
+        </div>
+    {%- endif %}
+{%- endblock form_errors %}
+
+{% block collection_widget -%}
+    {%- set attr = attr|merge({'class': "form-collection" }) -%}
+    {%- set attr = attr|merge({'data-widget-counter': form.children|length }) -%}
+
+    {{ parent() }}
+
+    {%- if allow_add -%}
+        <button class="add-value"
+        onclick="collection_add_value(this)"
+        data-list-selector="{{ form.vars.id }}"
+        type="button">Add</button>
+    {%- endif -%}
+{%- endblock collection_widget %}

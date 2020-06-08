@@ -1,0 +1,20 @@
+{
+  "entrypoints": {
+    "assets/main": {
+      "css": [
+        "./assets/main.css"
+      ],
+      "js": [
+        "./assets/main.js"
+      ]
+    },
+    "assets/templates/form": {
+      "css": [
+        "./assets/templates/form.css"
+      ],
+      "js": [
+        "./assets/templates/form.js"
+      ]
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+    "name": "double-star-systems/symfony-material-theme",
+    "description": "Symfony Theme using Materialize CSS",
+    "type": "symfony-bundle",
+    "authors": [
+        {
+            "name": "Rich Gerdes",
+            "email": "rich@richgerdes.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "DoubleStarSystems\\MaterialTheme\\": "src" }
+    },
+    "require": {
+        "symfony/asset": "~4.0",
+        "symfony/framework-bundle": "~4.0",
+        "knplabs/knp-menu-bundle": "^2.2"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.15",
+        "phpcompatibility/php-compatibility": "^8.1",
+        "squizlabs/php_codesniffer": "^3.3"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
