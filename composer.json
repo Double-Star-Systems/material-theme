@@ -12,8 +12,8 @@
         "psr-4": { "DoubleStarSystems\\MaterialTheme\\": "src" }
     },
     "require": {
-        "symfony/asset": "~4.0",
-        "symfony/framework-bundle": "~4.0",
+        "symfony/asset": "^4.0||^5.0",
+        "symfony/framework-bundle": "^4.0||^5.0",
         "knplabs/knp-menu-bundle": "^2.2"
     },
     "require-dev": {
