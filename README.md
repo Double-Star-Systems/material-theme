@@ -7,7 +7,7 @@ Symfony Theme using [Materialize CSS](https://www.npmjs.com/package/materialize-
 1. Include this project in your Composer installation.
 
 ```sh
-composer require double-star-systems/material-theme
+composer require double-star-systems/symfony-material-theme
 ```
 
 2. Install assets supplied by this project to your app's public folder.
