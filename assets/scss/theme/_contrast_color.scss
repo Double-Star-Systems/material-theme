@@ -1,0 +1,22 @@
+/**
+ * Determine whether to use dark or light text on top of given color.
+ * Returns black for dark text and white for light text.
+ */
+@function choose-contrast-color($color) {
+  $red: red($color);
+  $red: $red * $red * .299;
+
+  $green: green($color);
+  $green: $green * $green * .587;
+
+  $blue: blue($color);
+  $blue: $blue * $blue * .114;
+
+  $luminance: $red + $green + $blue;
+  @if ($luminance > 16900) {
+    @return black;
+  }
+  @else {
+    @return white;
+  }
+}

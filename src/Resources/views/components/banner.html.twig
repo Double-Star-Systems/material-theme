@@ -1,0 +1,32 @@
+{# src/resources/views/compoents/banner.html.twig #}
+
+{#
+
+This partial template can be used via an twig embed.
+
+```
+{% embed "@MaterialTheme/compoents/banner.html.twig" %}
+    {% set id = 'index-banner' %}
+    {% block banner %}
+        <br><br>
+        <h1 class="header center orange-text">{% block app_title %}{{ material_theme.app.name }}{% endblock %}</h1>
+        <div class="row center">
+            <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
+        </div>
+        <div class="row center">
+            <a href="http://materializecss.com/getting-started.html" id="download-button" class="btn-large waves-effect waves-light orange">Get Started</a>
+        </div>
+        <br><br>
+    {% endblock banner %}
+{% endembed %}
+```
+#}
+
+{% block banner_wrapper %}
+    <div class="section no-pad-bot"{% if id is defined %}id="{{ id }}"{% endif %}>
+        <div class="container">
+        {% block banner %}
+        {% endblock banner %}
+        </div>
+    </div>
+{% endblock banner_wrapper %}

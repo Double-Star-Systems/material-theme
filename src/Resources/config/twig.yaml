@@ -1,0 +1,3 @@
+twig:
+    globals:
+        material_theme: '%material_theme%'

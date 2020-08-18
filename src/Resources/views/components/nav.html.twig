@@ -1,26 +1,32 @@
-{# src/resources/views/partials/actions_nav.html.twig #}
+{# src/resources/views/components/nav.html.twig #}
 
 {#
 
 This partial template can be used via an twig embed.
 
 ```
-{% embed "@MaterialTheme/partials/actions_nav.html.twig" %}
-    {% set id = 'nav-id' %}
-    {% block actions_items %}
+{% embed "@MaterialTheme/components/nav.html.twig" %}
+    {% set id = 'nav-mobile' %}
+    {% set classes = ['sidenav'] %}
+
+    {% block nav_links %}
         <li><a href="{{ path('route') }}">Link Text</a><li>
-    {% endblock %}
+    {% endblock nav_links %}
 {% endembed %}
 ```
 #}
 
-{% block actions_nav %}
-<nav {% if id is defined %}id="{{ id }}"{% endif %} class="actions-nav">
-    {% block actions_list %}
-        <ul>
-        {% block actions_items %}
-        {% endblock %}
-        </ul>
-    {% endblock %}
-</nav>
-{% endblock %}
+{% block nav_wrapper %}
+<ul
+    {%- if id is defined %} id="{{ id }}"{% endif -%}
+    {%- if classes is defined %} class="{{ classes|join(" ") }}"{% endif -%}>
+    {% block nav %}
+        {% block nav_before %}
+        {% endblock nav_before %}
+        {% block nav_links %}
+        {% endblock nav_links %}
+        {% block nav_after %}
+        {% endblock nav_after %}
+    {% endblock nav %}
+</ul>
+{% endblock nav_wrapper %}

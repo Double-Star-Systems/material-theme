@@ -1,0 +1,78 @@
+{# src/resources/views/components/nav.html.twig #}
+
+{#
+
+This partial template can be used via an twig embed.
+
+```
+{% embed "@MaterialTheme/components/navbar.html.twig" %}
+    {% set include_branding = true %}
+    {% set include_nav_bar_links = true %}
+    {% set include_mobile_nav = true %}
+    {% set classes = header_classes %}
+
+    {% block navbar_links %}
+        <li><a href="#">Navbar Link</a></li>
+    {% endblock navbar_links %}
+
+    {% block mobile_nav_links %}
+        <li><a href="#">Navbar Link</a></li>
+    {% endblock mobile_nav_links %}
+{% endembed %}
+```
+#}
+
+{% if brand_classes is not defined %}
+    {% set brand_classes = [] %}
+{% endif %}
+{% set brand_classes = ['brand-logo']|merge(brand_classes) %}
+
+{% block navbar_wrapper %}
+<nav role="navigation"
+    {%- if id is defined %} id="{{ id }}"{% endif -%}
+    {%- if classes is defined %} class="{{ classes|join(" ") }}"{% endif -%}>
+    <div class="nav-wrapper container">
+    {% block navbar %}
+
+        {% if include_branding is defined and include_branding -%}
+            {% block branding %}
+                <a id="logo-container" href="{{ brand_link ?? '#' }}"
+                    {%- if brand_classes is defined %} class="{{ brand_classes|join(" ") }}"{% endif -%}>
+                    {%- block branding_logo -%}
+                        {{ material_theme.app.name }}
+                    {%- endblock branding_logo -%}
+                </a>
+            {% endblock branding %}
+        {% endif %}
+
+        {% if include_nav_bar_links is defined and include_nav_bar_links %}
+            {% embed "@MaterialTheme/components/nav.html.twig" with {nested_nav_links: block('navbar_links')} %}
+                {% set classes = [
+                    'right',
+                    include_mobile_nav is defined and include_mobile_nav ? 'hide-on-med-and-down'
+                ] %}
+
+                {% block nav_links %}
+                    {{ nested_nav_links|raw }}
+                {% endblock nav_links %}
+            {% endembed %}
+        {% endif %}
+
+        {% if include_mobile_nav is defined and include_mobile_nav %}
+            {% embed "@MaterialTheme/components/mobile_nav.html.twig"  with {nested_nav_links: block('mobile_nav_links')}%}
+                    {% set id = 'nav-mobile' %}
+                {% set classes = ['sidenav'] %}
+
+                {% block nav_links %}
+                    {{ nested_nav_links|raw }}
+                {% endblock nav_links %}
+
+                {% block nav_wrapper_after %}
+                <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                {% endblock nav_wrapper_after %}
+            {% endembed %}
+        {% endif %}
+    {% endblock navbar %}
+    </div>
+</nav>
+{% endblock navbar_wrapper %}

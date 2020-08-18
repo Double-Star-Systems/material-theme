@@ -1,0 +1,29 @@
+{# src/resources/views/components/mobile_nav.html.twig #}
+
+{% extends "@MaterialTheme/components/nav.html.twig" %}
+
+{#
+
+This partial template can be used via an twig embed.
+
+```
+{% embed "@MaterialTheme/components/mobile_nav.html.twig" %}
+    {% set id = 'nav-mobile' %}
+    {% set classes = ['sidenav'] %}
+
+    {% block nav_links %}
+        <li><a href="{{ path('route') }}">Link Text</a><li>
+    {% endblock nav_links %}
+{% endembed %}
+```
+#}
+
+{% block nav_before %}
+    <li><label for="{{ id }}-trigger" class="sidenav-trigger-label"><i class="material-icons">close</i></label></li>
+{% endblock nav_before %}
+
+{% block nav_wrapper %}
+    <label for="{{ id }}-trigger" class="sidenav-trigger-label"><i class="material-icons">menu</i></label>
+    <input type="checkbox" class="sidenav-trigger" id="{{ id }}-trigger">
+    {{ parent() }}
+{% endblock nav_wrapper %}

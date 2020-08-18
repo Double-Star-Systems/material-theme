@@ -17,9 +17,6 @@ class MaterialThemeExtension extends Extension implements PrependExtensionInterf
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('material_theme', $config);
-
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services.yaml');
     }
 
     public function prepend(ContainerBuilder $container)
@@ -32,5 +29,7 @@ class MaterialThemeExtension extends Extension implements PrependExtensionInterf
         ]);
         $framework_config = Yaml::parseFile(__DIR__ . '/../Resources/config/assets.yaml');
         $container->loadFromExtension('framework', $framework_config['framework']);
+        $twig_config = Yaml::parseFile(__DIR__ . '/../Resources/config/twig.yaml');
+        $container->loadFromExtension('twig', $twig_config['twig']);
     }
 }

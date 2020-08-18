@@ -1,0 +1,25 @@
+@import '_contrast_color.scss';
+
+nav {
+    @each $color_name, $color in $colors {
+      @each $color_type, $color_value in $color {
+        @if $color_type == "base" {
+          &.#{$color_name} a {
+            color: choose-contrast-color($color_value);
+          }
+        }
+        @else if $color_name != "shades" {
+          &.#{$color_name}.#{$color_type} a {
+            color: choose-contrast-color($color_value);
+          }
+        }
+      }
+    }
+
+    // Shade classes
+    @each $color, $color_value in $shades {
+      &.#{$color} a {
+        color: choose-contrast-color($color_value);
+      }
+    }
+}

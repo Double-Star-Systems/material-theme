@@ -1,20 +1,23 @@
-{# templates/form.html.twig #}
+{# src/resources/views/templates/form.html.twig #}
 
-{% extends '@MaterialTheme/theme.html.twig' %}
+{% extends "@MaterialTheme/theme.html.twig" %}
 
 {% form_theme form with '@MaterialTheme/form/theme.html.twig' only %}
 
 {% block stylesheets %}
-     <link rel="stylesheet" href="{{ asset('assets/templates/form.css', 'material-theme') }}" />
     {{ parent() }}
+     <link rel="stylesheet" href="{{ asset('assets/templates/form.css', 'materialtheme') }}" />
 {% endblock %}
 
-{% block contentregion %}
-    {% if form_title is defined %}<h2>{{ form_title}} </h2>{% endif %}
+{% block content %}
+    <div class="container">
+        <div class="section">
     {{ form(form) }}
-{% endblock %}
+        </div>
+    </div>
+{% endblock content %}
 
 {% block body_javascript %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('assets/templates/form.js', 'material-theme') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/templates/form.js', 'materialtheme') }}"></script>
 {% endblock body_javascript %}

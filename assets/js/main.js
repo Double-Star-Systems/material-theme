@@ -3,5 +3,5 @@
  */
 
 import 'materialize-css';
-require('materialize-css/sass/materialize.scss')
+import $ from "jquery";
 require('../scss/theme/main.scss');

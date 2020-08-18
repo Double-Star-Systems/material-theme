@@ -1,8 +1,13 @@
 {# form/theme.html.twig #}
 
-{% extends 'bootstrap_4_layout.html.twig' %}
+{% extends 'form_div_layout.html.twig' %}
 
 {% block form_label_errors %}{% endblock form_label_errors %}
+
+{%- block form_widget_simple -%}
+    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' validate')|trim}) -%}
+    {{ parent() }}
+{%- endblock form_widget_simple -%}
 
 {%- block form_rows -%}
     {% for child in form|filter(child => not child.rendered) %}
@@ -18,11 +23,15 @@
     {%- if help is not empty -%}
         {%- set widget_attr = {attr: {'aria-describedby': id ~"_help"}} -%}
     {%- endif -%}
-    <{{ element|default('div') }} class="form-group">
+    <{{ element|default('div') }} class="row form-group">
+        <div class="input-field">
         {{- form_label(form) -}}
-        {{- form_errors(form) -}}
-        {{- form_widget(form, widget_attr) -}}
-        {{- form_help(form) -}}
+
+        {% if 'checkbox' not in block_prefixes %}
+            {{- form_widget(form, widget_attr) -}}
+        {% endif %}
+
+        <span class="helper-text" data-error="{{- form_errors(form) -}}" data-success="">{{- form_help(form) -}}</span>
 
         {% if form.parent %}
             {% set parent = form.parent.vars.form %}
@@ -30,20 +39,58 @@
                 <button class="remove" data-item-selector="{{ id }}" onclick="return collection_delete_value(this);">Remove</button>
             {% endif %}
         {% endif %}
+        </div>
     </{{ element|default('div') }}>
 {%- endblock form_row %}
 
-{% block form_errors -%}
-    {%- if errors|length > 0 -%}
-        <div class="{% if form is not rootform %}invalid-feedback{% else %}alert alert-danger{% endif %} d-block">
-            {%- for error in errors -%}
-                <span class="d-block">
-                    <span class="form-error-icon badge badge-danger text-uppercase">{{ 'Error'|trans({}, 'validators') }}</span> <span class="form-error-message">{{ error.message }}</span>
+{% block form_label %}
+    {% if 'checkbox' in block_prefixes %}
+        {% if not compound -%}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif -%}
+        {% if required -%}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {%- endif -%}
+        {% if label is empty -%}
+            {%- if label_format is not empty -%}
+                {% set label = label_format|replace({
+                    '%name%': name,
+                    '%id%': id,
+                }) %}
+            {%- else -%}
+                {% set label = name|humanize %}
+            {%- endif -%}
+        {%- endif -%}
+        <p>
+            <{{ element|default('label') }}{% if label_attr %}{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}{% endif %}>
+                {{ form_widget(form) }}
+                <span>
+                    {%- if translation_domain is same as(false) -%}
+                        {%- if label_html is not defined or label_html is same as(false) -%}
+                            {{- label -}}
+                        {%- else -%}
+                            {{- label|raw -}}
+                        {%- endif -%}
+                    {%- else -%}
+                        {%- if label_html is not defined or label_html is same as(false) -%}
+                            {{- label|trans(label_translation_parameters, translation_domain) -}}
+                        {%- else -%}
+                            {{- label|trans(label_translation_parameters, translation_domain)|raw -}}
+                        {%- endif -%}
+                    {%- endif -%}
                 </span>
-            {%- endfor -%}
-        </div>
-    {%- endif %}
-{%- endblock form_errors %}
+            </{{ element|default('label') }}>
+        </p>
+
+        <label>
+    {% else %}
+        {% if compound is defined and compound %}
+            {% set element = "legend" %}
+        {% endif %}
+        {{ parent() }}
+    {% endif %}
+{% endblock form_label %}
+
 
 {% block collection_widget -%}
     {%- set attr = attr|merge({'class': "form-collection" }) -%}
