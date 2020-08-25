@@ -4,6 +4,11 @@
 
 {% block form_label_errors %}{% endblock form_label_errors %}
 
+{%- block button_widget -%}
+    {% set attr = attr|merge({class: 'btn'}) %}
+    {{ parent() }}
+{%- endblock button_widget -%}
+
 {%- block form_widget_simple -%}
     {%- set attr = attr|merge({class: (attr.class|default('') ~ ' validate')|trim}) -%}
     {{ parent() }}
@@ -36,7 +41,7 @@
         {% if form.parent %}
             {% set parent = form.parent.vars.form %}
             {% if parent.vars is defined and parent.vars.allow_delete is defined and parent.vars.allow_delete %}
-                <button class="remove" data-item-selector="{{ id }}" onclick="return collection_delete_value(this);">Remove</button>
+                <button class="btn remove" data-item-selector="{{ id }}" onclick="return collection_delete_value(this);">Remove</button>
             {% endif %}
         {% endif %}
         </div>
@@ -99,7 +104,7 @@
     {{ parent() }}
 
     {%- if allow_add -%}
-        <button class="add-value"
+        <button class="btn add-value"
         onclick="collection_add_value(this)"
         data-list-selector="{{ form.vars.id }}"
         type="button">Add</button>
