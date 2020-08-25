@@ -16,6 +16,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('app')
                     ->children()
                         ->scalarNode('name')->end()
+                        ->scalarNode('logo')->end()
                     ->end()
                 ->end() // app
                 ->arrayNode('theme')

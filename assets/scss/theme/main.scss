@@ -35,3 +35,16 @@ input[type="checkbox"].sidenav-trigger {
 .row {
     margin-bottom: 0;
 }
+
+#logo-container {
+    img {
+        max-height: 1.3em;
+        vertical-align: top;
+        margin-bottom: .3em;
+        margin-top: .3em;
+    }
+
+    .app-name {
+        vertical-align: top;
+    }
+}

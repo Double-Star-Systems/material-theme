@@ -7388,5 +7388,14 @@ input[type="checkbox"].sidenav-trigger:checked ~ .sidenav {
 .row {
   margin-bottom: 0; }
 
+#logo-container img {
+  max-height: 1.3em;
+  vertical-align: top;
+  margin-bottom: .3em;
+  margin-top: .3em; }
+
+#logo-container .app-name {
+  vertical-align: top; }
+
 
 /*# sourceMappingURL=main.css.map*/

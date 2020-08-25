@@ -39,7 +39,10 @@ This partial template can be used via an twig embed.
                 <a id="logo-container" href="{{ brand_link ?? '#' }}"
                     {%- if brand_classes is defined %} class="{{ brand_classes|join(" ") }}"{% endif -%}>
                     {%- block branding_logo -%}
-                        {{ material_theme.app.name }}
+                        {% if material_theme.app.logo is defined %}
+                            <img src="{{material_theme.app.logo}}">
+                        {% endif %}
+                        <span class="app-name">{{ material_theme.app.name }}</span>
                     {%- endblock branding_logo -%}
                 </a>
             {% endblock branding %}
